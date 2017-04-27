@@ -1,5 +1,9 @@
 package creitive.com.creitiveblog.data;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import creitive.com.creitiveblog.model.Token;
 import creitive.com.creitiveblog.model.User;
 
 /**
@@ -8,17 +12,23 @@ import creitive.com.creitiveblog.model.User;
 
 public class DataSource {
 
-    private User mUser;
+    private static final String TOKEN_KEY = "com.creitive.creitiveblogs.token";
+    private static final String PREFS_KEY = "com.creitive.creitiveblogs";
 
-    private static DataSource mInstance;
+    private User mUser;
+    private SharedPreferences mPrefs;
+    private Context mContext;
+    private Token mToken;
+
+    private static DataSource sInstance;
 
     private DataSource(){}
 
     public static DataSource getInstance(){
-        if(mInstance == null){
-            mInstance = new DataSource();
+        if(sInstance == null){
+            sInstance = new DataSource();
         }
-        return mInstance;
+        return sInstance;
     }
 
     public User getUser() {
@@ -32,11 +42,13 @@ public class DataSource {
         mUser = user;
     }
 
-    public static DataSource getmInstance() {
-        return mInstance;
+    public void setToken(Token token) {
+        mPrefs.edit().putString(TOKEN_KEY,token.getToken()).apply();
+        mToken = token;
     }
 
-    public static void setmInstance(DataSource mInstance) {
-        DataSource.mInstance = mInstance;
+    public void setContext(Context context) {
+        mContext = context;
+        mPrefs = context.getSharedPreferences(PREFS_KEY,Context.MODE_PRIVATE);
     }
 }
