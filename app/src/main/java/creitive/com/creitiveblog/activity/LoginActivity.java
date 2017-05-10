@@ -1,5 +1,6 @@
 package creitive.com.creitiveblog.activity;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,13 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(DataSource.getInstance().getToken() != null){
+            Intent intent = new Intent(this, BlogActivity.class);
+            this.startActivity(intent);
+            this.finish();
+        }
+
         ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         UserPresenter presenter = new UserPresenter();
         presenter.bind(this);

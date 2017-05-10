@@ -5,4 +5,14 @@
     <string name="login">Log in</string>
     <string name="error_email">Email invalid</string>
     <string name="error_password">Password should be 6 chars long</string>
+    <string name="missing_parameter">Email or password is missing</string>
+    <string name="wrong_credentials">Email or password is incorrect</string>
+    <string name="missing_token">Token is missing</string>
+    <string name="blog_doesnt_exist">Blog doesn\'t exist</string>
+    <string name="missing_header">Some header is missing</string>
+    <string name="no_internet_connection">No Internet connection</string>
+    <string name="parsing_error">Cannot parse response</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

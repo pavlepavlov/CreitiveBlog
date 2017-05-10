@@ -1,6 +1,5 @@
 package creitive.com.creitiveblog.model;
 
-import android.media.MediaCodec;
 import android.text.TextUtils;
 import android.widget.Toast;
 

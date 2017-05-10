@@ -51,4 +51,14 @@ public class DataSource {
         mContext = context;
         mPrefs = context.getSharedPreferences(PREFS_KEY,Context.MODE_PRIVATE);
     }
+
+    public Token getToken() {
+        String tokenString = mPrefs.getString(TOKEN_KEY,"");
+        if(tokenString.isEmpty()){
+            return null;
+        }
+        Token token = new Token();
+        token.setToken(tokenString);
+        return token;
+    }
 }
