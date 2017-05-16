@@ -16,6 +16,7 @@ import creitive.com.creitiveblog.adapter.BlogAdapter;
 import creitive.com.creitiveblog.data.DataSource;
 import creitive.com.creitiveblog.model.Blog;
 import creitive.com.creitiveblog.network.WebController;
+import creitive.com.creitiveblog.presenter.BlogPresenter;
 
 /**
  * Displays list of blog items
@@ -56,7 +57,9 @@ public class BlogListFragment extends Fragment {
     }
 
     public void onBlogListLoaded(List<Blog> blogs) {
-        mAdapter = new BlogAdapter(blogs);
+        BlogPresenter presenter = new BlogPresenter();
+        presenter.bind(this);
+        mAdapter = new BlogAdapter(blogs,presenter);
         mRecyclerView.setAdapter(mAdapter);
     }
 }

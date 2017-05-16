@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import creitive.com.creitiveblog.fragment.BlogListFragment;
+import creitive.com.creitiveblog.fragment.WebViewFragment;
 import creitive.com.creitiveblog.model.Blog;
 import creitive.com.creitiveblog.model.Token;
 import creitive.com.creitiveblog.model.User;
@@ -62,5 +63,25 @@ public class WebController {
                                 GenericErrorHandler.handleError(fragment.getContext(),throwable,GenericErrorHandler.FLAG_LOGIN);
                             }
                         });
+    }
+
+    public static void getBlog(final WebViewFragment fragment, int id, String token) {
+        Observable<Blog> getBlog = RestClient.getInstance().service.getBlog(token,id);
+        getBlog.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        new Consumer<Blog>() {
+                            @Override
+                            public void accept(Blog blog) throws Exception {
+                                fragment.onBlogLoaded(blog);
+                            }
+                        },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                GenericErrorHandler.handleError(fragment.getContext(),throwable,GenericErrorHandler.FLAG_LOGIN);
+                            }
+                        }
+                );
     }
 }

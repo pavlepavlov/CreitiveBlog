@@ -1,19 +1,17 @@
 package creitive.com.creitiveblog.adapter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import creitive.com.creitiveblog.R;
+import creitive.com.creitiveblog.databinding.BlogListItemBinding;
 import creitive.com.creitiveblog.model.Blog;
+import creitive.com.creitiveblog.presenter.BlogPresenter;
 
 /**
  * Displays Blog object into blog_list_item.xml
@@ -23,18 +21,23 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.BlogViewHolder
 
     private List<Blog> mList;
     private Context mContext;
+    private BlogPresenter mPresenter;
 
-    public BlogAdapter(List<Blog> list){
+    public BlogAdapter(List<Blog> list, BlogPresenter presenter){
         mList = list;
+        mPresenter = presenter;
     }
 
 
     @Override
     public BlogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.blog_list_item,parent,false);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        BlogListItemBinding binding = DataBindingUtil.inflate(inflater,R.layout.blog_list_item,parent,false);
 
-        return new BlogViewHolder(view);
+        binding.setPresenter(mPresenter);
+
+        return new BlogViewHolder(binding);
     }
 
     @Override
@@ -50,22 +53,15 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.BlogViewHolder
 
     public class BlogViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvTitle;
-        private TextView tvDescription;
-        private ImageView ivPicture;
+        private BlogListItemBinding mBinding;
 
-        public BlogViewHolder(View itemView) {
-            super(itemView);
-            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
-            tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
-            ivPicture = (ImageView) itemView.findViewById(R.id.ivPicture);
+        public BlogViewHolder(BlogListItemBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
         }
 
         public void bind(Blog blog){
-            tvTitle.setText(blog.getTitle());
-            tvDescription.setText(blog.getDescription());
-            Picasso.with(mContext).load(blog.getImageUrl()).placeholder(R.drawable.placeholder).fit().into(ivPicture);
+            mBinding.setBlog(blog);
         }
-
     }
 }

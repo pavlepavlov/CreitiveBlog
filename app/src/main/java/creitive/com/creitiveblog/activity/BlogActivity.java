@@ -18,7 +18,7 @@ public class BlogActivity extends AppCompatActivity {
         loadFragment(new BlogListFragment());
     }
 
-    private void loadFragment(Fragment blogListFragment) {
+    public void loadFragment(Fragment blogListFragment) {
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.flContent,blogListFragment).commit();
     }

@@ -11,6 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Defines an interface that creates a client that commuunicates with the server
@@ -33,4 +34,12 @@ interface APIService {
     })
     @GET(Blog.GET_LIST)
     Observable<List<Blog>> getBlogList(@Header("X-Authorize") String token);
+
+    @Headers({
+            "X-Client-Platform: Android",
+            "Accept: application/json",
+            "Content-Type: application/json"
+    })
+    @GET(Blog.GET_SINGLE)
+    Observable<Blog> getBlog(@Header("X-Authorize") String token,@Path("id") int id);
 }
